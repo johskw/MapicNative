@@ -5,9 +5,25 @@ import {
   Text,
   View
 } from 'react-native';
-import MapView from 'react-native-maps'
+import MapView, { Marker, Callout } from 'react-native-maps'
 
 export default class Map extends Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      newMarker: {}
+    }
+  }
+
+  setNewMarker (e) {
+    this.setState({
+      newMarker: {
+        coordinate: e.nativeEvent.coordinate
+      }
+    })
+  }
+
   render () {
     return (
       <MapView
@@ -19,7 +35,16 @@ export default class Map extends Component {
           longitudeDelta: 0.0421,
         }}
         showsUserLocation={true}
-      />
+        onPress={(e) => this.setNewMarker(e)}
+      >
+        <Marker
+          coordinate={this.state.newMarker.coordinate}
+        >
+          <Callout>
+            <Text>ここに投稿する</Text>
+          </Callout>
+        </Marker>
+      </MapView>
     )
   }
 }
