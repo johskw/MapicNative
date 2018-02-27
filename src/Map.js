@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   Platform,
   StyleSheet,
   Text,
-  View
-} from 'react-native';
+  View,
+  TouchableOpacity
+} from 'react-native'
 import MapView, { Marker, Callout } from 'react-native-maps'
+import {
+  Actions
+} from 'react-native-router-flux'
 
 export default class Map extends Component {
 
@@ -24,8 +28,22 @@ export default class Map extends Component {
     })
   }
 
+  renderNewMarker () {
+    return(
+      <Marker
+        coordinate={this.state.newMarker.coordinate}
+      >
+        <Callout>
+          <TouchableOpacity onPress={() => { Actions.newLocation() }}>
+            <Text>ここに投稿する</Text>
+          </TouchableOpacity>
+        </Callout>
+      </Marker>
+    )
+  }
+
   render () {
-    return (
+    return(
       <MapView
         style={styles.map}
         initialRegion={{
@@ -37,13 +55,7 @@ export default class Map extends Component {
         showsUserLocation={true}
         onPress={(e) => this.setNewMarker(e)}
       >
-        <Marker
-          coordinate={this.state.newMarker.coordinate}
-        >
-          <Callout>
-            <Text>ここに投稿する</Text>
-          </Callout>
-        </Marker>
+        {this.state.newMarker.coordinate !== undefined && this.renderNewMarker()}
       </MapView>
     )
   }
