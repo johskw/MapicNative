@@ -16,8 +16,26 @@ export default class Map extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      newMarker: {}
+      newMarker: {},
+      markers: [{ "id": 17, "title": "タイトル1111", "content": "内容1", "image": "img1.png", "latitude": 35.1, "longitude": 140.1, "created_at": "2018-02-20T11:21:30Z", "updated_at": "2018-02-24T17:22:00Z" }]
     }
+  }
+
+  componentWillMount () {
+    this.setMarkers()
+  }
+
+  setMarkers() {
+    fetch('http://172.20.10.4:2828/locations')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({
+        markers: responseJson
+      })
+    })
+    .catch((error) => {
+      alert(error)
+    })
   }
 
   setNewMarker (e) {
@@ -43,6 +61,16 @@ export default class Map extends Component {
   }
 
   render () {
+    const markerList = this.state.markers.map((marker, i) => (
+      <Marker
+        coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
+        key={i + 1}
+      >
+        <Callout>
+          <Text>{marker.title}</Text>
+        </Callout>
+      </Marker>
+    ))
     return(
       <MapView
         style={styles.map}
@@ -56,6 +84,7 @@ export default class Map extends Component {
         onPress={(e) => this.setNewMarker(e)}
       >
         {this.state.newMarker.coordinate !== undefined && this.renderNewMarker()}
+        {markerList}
       </MapView>
     )
   }
