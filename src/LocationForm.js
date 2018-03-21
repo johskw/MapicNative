@@ -23,17 +23,20 @@ export default class LocationForm extends Component {
   }
 
   postLocation(e) {
-    fetch('http://localhost:2828/locations', {
+    fetch('http://localhost:8080/locations', {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         title: this.state.title,
         content: this.state.content,
         image: this.state.image,
-      }),
+      })
+    })
+    .catch((error) => {
+      alert(error)
     })
   }
 

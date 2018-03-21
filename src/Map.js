@@ -26,7 +26,7 @@ export default class Map extends Component {
   }
 
   setMarkers() {
-    fetch('http://172.20.10.4:2828/locations')
+    fetch('http://localhost:8080/locations')
     .then((response) => response.json())
     .then((responseJson) => {
       this.setState({
