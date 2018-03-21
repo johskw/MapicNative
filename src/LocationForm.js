@@ -10,6 +10,7 @@ import {
 import {
   Actions
 } from 'react-native-router-flux'
+import ImagePicker from 'react-native-image-picker'
 
 export default class LocationForm extends Component {
 
@@ -22,6 +23,42 @@ export default class LocationForm extends Component {
       latitude: this.props.coordinate.latitude,
       longitude: this.props.coordinate.longitude
     }
+  }
+
+  selectImage (e) {
+    let options = {
+      title: 'Select Avatar',
+      customButtons: [
+        { name: 'fb', title: 'Choose Photo from Facebook' },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images'
+      }
+    }
+    ImagePicker.showImagePicker(options, (response) => {
+      alert('Response = ', response);
+
+      if (response.didCancel) {
+        alert('User cancelled image picker');
+      }
+      else if (response.error) {
+        alert('ImagePicker Error: ', response.error);
+      }
+      else if (response.customButton) {
+        alert('User tapped custom button: ', response.customButton);
+      }
+      else {
+        let source = { uri: response.uri };
+
+        // You can also display the image using data:
+        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        this.setState({
+          avatarSource: source
+        })
+      }
+    })
   }
 
   postLocation(e) {
@@ -62,11 +99,14 @@ export default class LocationForm extends Component {
           placeholder='内容'
           onChangeText={(text) => this.setState({ content: text })}
         />
-        <TextInput
+        {/* <TextInput
           value={this.state.image}
           placeholder='画像'
           onChangeText={(text) => this.setState({ image: text })}
-        />
+        /> */}
+        <TouchableOpacity onPress={(e) => this.selectImage(e)}>
+          <Text>画像を選択</Text>
+        </TouchableOpacity>
         <Text>
           latitude: {this.state.latitude}
         </Text>
