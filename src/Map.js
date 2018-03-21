@@ -67,7 +67,9 @@ export default class Map extends Component {
         key={i + 1}
       >
         <Callout>
-          <Text>{marker.title}</Text>
+          <TouchableOpacity onPress={() => { Actions.Location({ location: marker }) }}>
+            <Text>{marker.title}</Text>
+          </TouchableOpacity>
         </Callout>
       </Marker>
     ))
