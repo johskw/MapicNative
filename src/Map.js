@@ -17,7 +17,7 @@ export default class Map extends Component {
     super(props)
     this.state = {
       newMarker: {},
-      markers: [{ "id": 17, "title": "タイトル1111", "content": "内容1", "image": "img1.png", "latitude": 35.1, "longitude": 140.1, "created_at": "2018-02-20T11:21:30Z", "updated_at": "2018-02-24T17:22:00Z" }]
+      markers: []
     }
   }
 
@@ -52,7 +52,7 @@ export default class Map extends Component {
         coordinate={this.state.newMarker.coordinate}
       >
         <Callout>
-          <TouchableOpacity onPress={() => { Actions.newLocation() }}>
+          <TouchableOpacity onPress={() => { Actions.newLocation({coordinate: this.state.newMarker.coordinate}) }}>
             <Text>ここに投稿する</Text>
           </TouchableOpacity>
         </Callout>

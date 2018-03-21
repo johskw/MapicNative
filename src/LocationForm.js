@@ -19,6 +19,8 @@ export default class LocationForm extends Component {
       title: "",
       image: "",
       content: "",
+      latitude: this.props.coordinate.latitude,
+      longitude: this.props.coordinate.longitude
     }
   }
 
@@ -33,6 +35,8 @@ export default class LocationForm extends Component {
         title: this.state.title,
         content: this.state.content,
         image: this.state.image,
+        latitude: this.state.latitude,
+        longitude: this.state.longitude
       })
     })
     .catch((error) => {
@@ -58,6 +62,12 @@ export default class LocationForm extends Component {
           placeholder='画像'
           onChangeText={(text) => this.setState({ image: text })}
         />
+        <Text>
+          latitude: {this.state.latitude}
+        </Text>
+        <Text>
+          longitude: {this.state.longitude}
+        </Text>
         <TouchableOpacity onPress={(e) => this.postLocation(e)}>
           <Text>投稿</Text>
         </TouchableOpacity>
