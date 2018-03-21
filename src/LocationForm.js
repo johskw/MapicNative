@@ -39,6 +39,11 @@ export default class LocationForm extends Component {
         longitude: this.state.longitude
       })
     })
+    .then((response) => {
+      if (response.ok) {
+        Actions.map({ type: 'reset' })
+      }
+    })
     .catch((error) => {
       alert(error)
     })
