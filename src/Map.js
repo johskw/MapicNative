@@ -67,15 +67,15 @@ export default class Map extends Component {
         key={i + 1}
         coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
         onPress={() => { Actions.Location({ location: marker }) }}
-        centerOffset={{x: 0, y: -30}}
+        centerOffset={{x: 0, y: -35}}
       >
         <Image
           source={{ uri: 'data:image/jpeg;base64,' + marker.image }}
-          style={{ width: 40, height: 40, borderRadius: 20, position: 'absolute', top: 4, left: 4 }}
+          style={{ width: 48, height: 48, borderRadius: 24, position: 'absolute', top: 4, left: 4 }}
         />
         <Image
           source={require('../images/marker_icon.png')}
-          style={{ width: 48, height: 60 }}
+          style={{ width: 56, height: 70 }}
         />
       </Marker>
     ))
