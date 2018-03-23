@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native'
 import MapView, { Marker, Callout } from 'react-native-maps'
 import {
@@ -62,16 +63,31 @@ export default class Map extends Component {
 
   render () {
     const markerList = this.state.markers.map((marker, i) => (
-      <Marker
-        coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
-        key={i + 1}
-      >
-        <Callout>
-          <TouchableOpacity onPress={() => { Actions.Location({ location: marker }) }}>
-            <Text>{marker.title}</Text>
-          </TouchableOpacity>
-        </Callout>
-      </Marker>
+      <View key={i + 1}>
+        <Marker
+          coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
+          centerOffset={{x: 0, y: -30}}
+        >
+          <Image
+            source={require('../images/marker_icon.png')}
+            style={{ width: 48, height: 60 }}
+          />
+          <Callout>
+            <TouchableOpacity onPress={() => { Actions.Location({ location: marker }) }}>
+              <Text>{marker.title}</Text>
+            </TouchableOpacity>
+          </Callout>
+        </Marker>
+        <Marker
+          coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+          centerOffset={{ x: 0, y: -36 }}
+        >
+          <Image
+            source={{ uri: 'data:image/jpeg;base64,' + marker.image }}
+            style={{ width: 40, height: 40, borderRadius: 20 }}
+          />
+        </Marker>
+      </View>
     ))
     return(
       <MapView
