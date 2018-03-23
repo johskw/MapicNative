@@ -5,7 +5,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Image
 } from 'react-native'
 import {
   Actions
@@ -18,7 +19,8 @@ export default class LocationForm extends Component {
     super(props)
     this.state = {
       title: "",
-      image: "",
+      imageData: "",
+      imageUri: "",
       content: "",
       latitude: this.props.coordinate.latitude,
       longitude: this.props.coordinate.longitude
@@ -27,35 +29,20 @@ export default class LocationForm extends Component {
 
   selectImage (e) {
     let options = {
-      title: 'Select Avatar',
-      customButtons: [
-        { name: 'fb', title: 'Choose Photo from Facebook' },
-      ],
+      title: '画像選択',
       storageOptions: {
         skipBackup: true,
         path: 'images'
       }
     }
     ImagePicker.showImagePicker(options, (response) => {
-      alert('Response = ', response);
-
-      if (response.didCancel) {
-        alert('User cancelled image picker');
-      }
-      else if (response.error) {
-        alert('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
-        alert('User tapped custom button: ', response.customButton);
+      if (response.error) {
+        alert('画像を選択できません')
       }
       else {
-        let source = { uri: response.uri };
-
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
         this.setState({
-          avatarSource: source
+          imageData: response.data,
+          imageUri: 'data:image/jpeg;base64,' + response.data,
         })
       }
     })
@@ -71,7 +58,7 @@ export default class LocationForm extends Component {
       body: JSON.stringify({
         title: this.state.title,
         content: this.state.content,
-        image: this.state.image,
+        image: this.state.imageData,
         latitude: this.state.latitude,
         longitude: this.state.longitude
       })
@@ -84,6 +71,15 @@ export default class LocationForm extends Component {
     .catch((error) => {
       alert(error)
     })
+  }
+
+  renderImage() {
+    return (
+      <Image
+        source={{ uri: this.state.imageUri }}
+        style={{ width: 400, height: 400 }}
+      />
+    )
   }
 
   render() {
@@ -99,20 +95,10 @@ export default class LocationForm extends Component {
           placeholder='内容'
           onChangeText={(text) => this.setState({ content: text })}
         />
-        {/* <TextInput
-          value={this.state.image}
-          placeholder='画像'
-          onChangeText={(text) => this.setState({ image: text })}
-        /> */}
         <TouchableOpacity onPress={(e) => this.selectImage(e)}>
           <Text>画像を選択</Text>
         </TouchableOpacity>
-        <Text>
-          latitude: {this.state.latitude}
-        </Text>
-        <Text>
-          longitude: {this.state.longitude}
-        </Text>
+        {this.state.imageUri !== "" && this.renderImage()}
         <TouchableOpacity onPress={(e) => this.postLocation(e)}>
           <Text>投稿</Text>
         </TouchableOpacity>
