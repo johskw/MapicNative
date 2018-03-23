@@ -30,6 +30,7 @@ export default class LocationForm extends Component {
   selectImage (e) {
     let options = {
       title: '画像選択',
+      maxWidth: 600,
       storageOptions: {
         skipBackup: true,
         path: 'images'
