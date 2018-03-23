@@ -40,18 +40,18 @@ export default class Map extends Component {
   }
 
   setNewMarker (e) {
-    this.setState({
-      newMarker: {
-        coordinate: e.nativeEvent.coordinate
-      }
-    })
+    if (e.nativeEvent.action !== 'marker-press') {
+      this.setState({
+        newMarker: {
+          coordinate: e.nativeEvent.coordinate
+        }
+      })
+    }
   }
 
   renderNewMarker () {
     return(
-      <Marker
-        coordinate={this.state.newMarker.coordinate}
-      >
+      <Marker coordinate={this.state.newMarker.coordinate} >
         <Callout>
           <TouchableOpacity onPress={() => { Actions.newLocation({coordinate: this.state.newMarker.coordinate}) }}>
             <Text>ここに投稿する</Text>
@@ -63,31 +63,21 @@ export default class Map extends Component {
 
   render () {
     const markerList = this.state.markers.map((marker, i) => (
-      <View key={i + 1}>
-        <Marker
-          coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
-          centerOffset={{x: 0, y: -30}}
-        >
-          <Image
-            source={require('../images/marker_icon.png')}
-            style={{ width: 48, height: 60 }}
-          />
-          <Callout>
-            <TouchableOpacity onPress={() => { Actions.Location({ location: marker }) }}>
-              <Text>{marker.title}</Text>
-            </TouchableOpacity>
-          </Callout>
-        </Marker>
-        <Marker
-          coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
-          centerOffset={{ x: 0, y: -36 }}
-        >
-          <Image
-            source={{ uri: 'data:image/jpeg;base64,' + marker.image }}
-            style={{ width: 40, height: 40, borderRadius: 20 }}
-          />
-        </Marker>
-      </View>
+      <Marker
+        key={i + 1}
+        coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
+        onPress={() => { Actions.Location({ location: marker }) }}
+        centerOffset={{x: 0, y: -30}}
+      >
+        <Image
+          source={{ uri: 'data:image/jpeg;base64,' + marker.image }}
+          style={{ width: 40, height: 40, borderRadius: 20, position: 'absolute', top: 4, left: 4 }}
+        />
+        <Image
+          source={require('../images/marker_icon.png')}
+          style={{ width: 48, height: 60 }}
+        />
+      </Marker>
     ))
     return(
       <MapView
