@@ -5,7 +5,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Image
 } from 'react-native'
 import {
   Actions
@@ -23,14 +24,15 @@ export default class Location extends Component {
           {this.props.location.content}
         </Text>
         <Text>
-          {this.props.location.image}
-        </Text>
-        <Text>
           {this.props.location.latitude}
         </Text>
         <Text>
           {this.props.location.longitude}
         </Text>
+        <Image
+          source={{ uri: 'data:image/jpeg;base64,' + this.props.location.image }}
+          style={{ width: 400, height: 400 }}
+        />
       </View>
     )
   }
