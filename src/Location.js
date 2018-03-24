@@ -19,12 +19,12 @@ export default class Location extends Component {
   render () {
     return(
       <ScrollView style={styles.container}>
-        <View style={styles.title}>
-          <Text style={{ fontSize: 16}}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>
             {this.props.location.title}
           </Text>
         </View>
-        <View style={styles.title}>
+        <View style={styles.contentContainer}>
           <Text>
             {this.props.location.content}
           </Text>
@@ -72,10 +72,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 30,
   },
-  title: {
+  titleContainer: {
     marginBottom: 20,
   },
-  content: {
+  title: {
+   fontSize: 16
+  },
+  contentContainer: {
     marginBottom: 20
   },
   imageContainer: {
