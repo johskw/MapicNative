@@ -14,8 +14,8 @@ export default class App extends Component {
       <Router>
         <Stack key="root">
           <Scene key="map" component={Map} title="Map" />
-          <Scene key="newLocation" component={LocationForm} title="New Location" />
-          <Scene key="Location" component={Location} title="Location" />
+          <Scene key="newLocation" component={LocationForm} title="新規投稿" />
+          <Scene key="Location" component={Location} />
         </Stack>
       </Router>
     )

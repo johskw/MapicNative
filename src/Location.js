@@ -19,6 +19,12 @@ export default class Location extends Component {
   render () {
     return(
       <ScrollView style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Image
+            source={{ uri: 'data:image/jpeg;base64,' + this.props.location.image }}
+            style={styles.image}
+          />
+        </View>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>
             {this.props.location.title}
@@ -28,12 +34,6 @@ export default class Location extends Component {
           <Text>
             {this.props.location.content}
           </Text>
-        </View>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: 'data:image/jpeg;base64,' + this.props.location.image }}
-            style={styles.image}
-          />
         </View>
         <View style={styles.mapContainer}>
           <MapView
@@ -71,30 +71,31 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 30,
-  },
-  titleContainer: {
-    marginBottom: 20,
-  },
-  title: {
-   fontSize: 16
-  },
-  contentContainer: {
-    marginBottom: 20
+    paddingTop: 0
   },
   imageContainer: {
     alignItems: 'center',
     marginBottom: 20
   },
   image: {
-    height: 300,
-    width: 300
+    height: 375,
+    width: 375
+  },
+  titleContainer: {
+    marginBottom: 10,
+  },
+  title: {
+   fontSize: 16
+  },
+  contentContainer: {
+    marginBottom: 30
   },
   mapContainer: {
     alignItems: 'center',
     marginBottom: 100
   },
   map: {
-    height: 300,
-    width: 300
+    height: 320,
+    width: 320
   }
 })
