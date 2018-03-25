@@ -68,7 +68,7 @@ export default class LocationForm extends Component {
     })
     .then((response) => {
       if (response.ok) {
-        Actions.map({ type: 'reset' })
+        Actions.drawer({ type: 'reset' })
       }
     })
     .catch((error) => {
@@ -90,6 +90,8 @@ export default class LocationForm extends Component {
   render() {
     return (
       <ScrollView style={styles.container}>
+      <Text>{this.props.user.name}</Text>
+      <Text>{this.props.token}</Text>
         <View style={styles.titleContainer}>
           <TextInput
             value={this.state.title}

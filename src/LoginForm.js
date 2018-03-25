@@ -19,26 +19,22 @@ export default class LocationForm extends Component {
     this.state = {
       email: "",
       password: "",
-      token: "",
       isLoading: true
     }
   }
 
   componentWillMount () {
-    this.setCurrentUser()
+    this.checkAuth()
   }
 
-  setCurrentUser = async () => {
+  checkAuth = async () => {
     try {
-      // let userData = await AsyncStorage.getItem('user')
+      let userData = await AsyncStorage.getItem('user')
       let tokenData = await AsyncStorage.getItem('token')
-      // let user = JSON.parse(userData)
+      let user = JSON.parse(userData)
       let token = JSON.parse(tokenData)
-      if (token !== null) {
-        this.setState({
-          token: token
-        })
-        Actions.drawer({ type: 'reset' })
+      if (token !== null && user !== null ) {
+        Actions.drawer({ type: 'reset', token: token, user: user })
       } else {
         this.setState({
           isLoading: false

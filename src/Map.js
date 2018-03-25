@@ -5,7 +5,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image
+  Image,
+  AsyncStorage
 } from 'react-native'
 import MapView, { Marker, Callout } from 'react-native-maps'
 import {
@@ -17,13 +18,31 @@ export default class Map extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      user: {},
+      token: "",
       newMarker: {},
       markers: []
     }
   }
 
   componentWillMount () {
+    this.setUser()
     this.setMarkers()
+  }
+
+  setUser = async () => {
+    try {
+      let userData = await AsyncStorage.getItem('user')
+      let tokenData = await AsyncStorage.getItem('token')
+      let user = JSON.parse(userData)
+      let token = JSON.parse(tokenData)
+      this.setState({
+        user: user,
+        token: token
+      })
+    } catch (error) {
+      alert(error)
+    }
   }
 
   setMarkers() {
@@ -53,7 +72,7 @@ export default class Map extends Component {
     return(
       <Marker coordinate={this.state.newMarker.coordinate} >
         <Callout>
-          <TouchableOpacity onPress={() => { Actions.newLocation({coordinate: this.state.newMarker.coordinate}) }}>
+          <TouchableOpacity onPress={() => { Actions.newLocation({coordinate: this.state.newMarker.coordinate, user: this.state.user, token: this.state.token }) }}>
             <Text>ここに投稿する</Text>
           </TouchableOpacity>
         </Callout>
