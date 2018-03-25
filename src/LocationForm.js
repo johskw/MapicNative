@@ -52,18 +52,20 @@ export default class LocationForm extends Component {
   }
 
   postLocation(e) {
-    fetch('http://localhost:8080/locations', {
+    fetch('http://localhost:8080/restricted/locations', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.props.token
       },
       body: JSON.stringify({
         title: this.state.title,
         content: this.state.content,
         image: this.state.imageData,
         latitude: this.state.latitude,
-        longitude: this.state.longitude
+        longitude: this.state.longitude,
+        user_id: this.props.user.id
       })
     })
     .then((response) => {
@@ -90,8 +92,6 @@ export default class LocationForm extends Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-      <Text>{this.props.user.name}</Text>
-      <Text>{this.props.token}</Text>
         <View style={styles.titleContainer}>
           <TextInput
             value={this.state.title}
