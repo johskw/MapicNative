@@ -19,20 +19,24 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <Stack key="root">
+        <Scene key="root">
           <Scene key="login" component={LoginForm} title="ログイン" />
           <Drawer
             key="drawer"
+            hideNavBar
+            drawerPosition='right'
             // drawerImage={() => (<Image/>)} // デフォルトのハンバーガーメニューを差し替える
             // drawerIcon={() => (<Icon/>)} // デフォルトのハンバーガーメニューを差し替える
-            drawerWidth={300}
+            drawerWidth={220}
             contentComponent={DrawerContent}
           >
-            <Scene key="map" component={Map} title="Map" />
-            <Scene key="newLocation" component={LocationForm} title="新規投稿" />
-            <Scene key="Location" component={Location} />
+            <Stack>
+              <Scene key="map" component={Map} title="Map" />
+              <Scene key="newLocation" component={LocationForm} title="新規投稿" />
+              <Scene key="Location" component={Location} />
+            </Stack>
           </Drawer>
-        </Stack>
+        </Scene>
       </Router>
     )
   }

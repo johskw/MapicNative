@@ -21,12 +21,16 @@ export default class Location extends Component {
 
   render() {
     return (
-      <TouchableOpacity
-        onPress={(e) => this.deleteAuthData(e)}
-        style={styles.logoutBtn}
-      >
-        <Text style={styles.loginBtnText}>ログアウト</Text>
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.logoutBtnContainer} >
+          <TouchableOpacity
+            onPress={(e) => this.deleteAuthData(e)}
+            style={styles.logoutBtn}
+          >
+            <Text style={styles.logoutBtnText}>ログアウト</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     )
   }
 }
@@ -34,17 +38,23 @@ export default class Location extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 30,
-    paddingTop: 0
+    backgroundColor: '#fff'
   },
-  imageContainer: {
+  logoutBtnContainer : {
     alignItems: 'center',
-    marginBottom: 20
+    marginTop: 60
   },
-  image: {
-    height: 375,
-    width: 375
+  logoutBtn: {
+    backgroundColor: '#ffa500',
+    borderRadius: 2,
+    width: 160,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  logoutBtnText: {
+    color: '#fff',
+    fontSize: 16
   },
   titleContainer: {
     marginBottom: 10,
@@ -52,15 +62,4 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16
   },
-  contentContainer: {
-    marginBottom: 30
-  },
-  mapContainer: {
-    alignItems: 'center',
-    marginBottom: 100
-  },
-  map: {
-    height: 320,
-    width: 320
-  }
 })
