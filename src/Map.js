@@ -21,16 +21,15 @@ export default class Map extends Component {
       user: {},
       token: "",
       newMarker: {},
-      markers: []
+      markers: [],
     }
   }
 
   componentWillMount () {
-    this.setUser()
-    this.setMarkers()
+    this.setData()
   }
 
-  setUser = async () => {
+  setData = async () => {
     try {
       let userData = await AsyncStorage.getItem('user')
       let tokenData = await AsyncStorage.getItem('token')
@@ -40,13 +39,18 @@ export default class Map extends Component {
         user: user,
         token: token
       })
+      this.setMarkers()
     } catch (error) {
       alert(error)
     }
   }
 
   setMarkers() {
-    fetch('http://localhost:8080/locations')
+    fetch('http://localhost:8080/restricted/locations', {
+      headers: {
+        'Authorization': 'Bearer ' + this.state.token
+      }
+    })
     .then((response) => response.json())
     .then((responseJson) => {
       this.setState({
@@ -98,6 +102,7 @@ export default class Map extends Component {
         />
       </Marker>
     ))
+
     return(
       <MapView
         style={styles.map}
@@ -118,5 +123,5 @@ export default class Map extends Component {
 }
 
 const styles = StyleSheet.create({
-  map: { ...StyleSheet.absoluteFillObject, },
-});
+  map: { ...StyleSheet.absoluteFillObject, }
+})
