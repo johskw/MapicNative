@@ -35,6 +35,11 @@ export default class Location extends Component {
             {this.props.location.content}
           </Text>
         </View>
+        <View style={styles.userContainer}>
+          <Text>
+            {this.props.location.user.name}さん
+          </Text>
+        </View>
         <View style={styles.mapContainer}>
           <MapView
             style={styles.map}
@@ -88,6 +93,10 @@ const styles = StyleSheet.create({
    fontSize: 16
   },
   contentContainer: {
+    marginBottom: 10
+  },
+  userContainer: {
+    alignItems: 'flex-end',
     marginBottom: 30
   },
   mapContainer: {

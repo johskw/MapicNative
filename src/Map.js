@@ -21,7 +21,7 @@ export default class Map extends Component {
       user: {},
       token: "",
       newMarker: {},
-      markers: [],
+      locations: [],
     }
   }
 
@@ -39,13 +39,13 @@ export default class Map extends Component {
         user: user,
         token: token
       })
-      this.setMarkers()
+      this.setLocations()
     } catch (error) {
       alert(error)
     }
   }
 
-  setMarkers() {
+  setLocations() {
     fetch('http://localhost:8080/restricted/locations', {
       headers: {
         'Authorization': 'Bearer ' + this.state.token
@@ -54,7 +54,7 @@ export default class Map extends Component {
     .then((response) => response.json())
     .then((responseJson) => {
       this.setState({
-        markers: responseJson
+        locations: responseJson
       })
     })
     .catch((error) => {
@@ -85,15 +85,15 @@ export default class Map extends Component {
   }
 
   render () {
-    const markerList = this.state.markers.map((marker, i) => (
+    const markerList = this.state.locations.map((location, i) => (
       <Marker
         key={i + 1}
-        coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
-        onPress={() => { Actions.Location({ location: marker }) }}
+        coordinate={{ latitude: location.latitude, longitude: location.longitude}}
+        onPress={() => { Actions.Location({ location: location }) }}
         centerOffset={{x: 0, y: -35}}
       >
         <Image
-          source={{ uri: 'data:image/jpeg;base64,' + marker.image }}
+          source={{ uri: 'data:image/jpeg;base64,' + location.image }}
           style={{ width: 48, height: 48, borderRadius: 24, position: 'absolute', top: 4, left: 4 }}
         />
         <Image
