@@ -19,13 +19,13 @@ export default class LocationForm extends Component {
     this.state = {
       email: "",
       password: "",
-      token: ""
+      token: "",
+      isLoading: true
     }
   }
 
   componentWillMount () {
     this.setCurrentUser()
-    this.currentUserCheck()
   }
 
   setCurrentUser = async () => {
@@ -38,15 +38,14 @@ export default class LocationForm extends Component {
         this.setState({
           token: token
         })
+        Actions.drawer({ type: 'reset' })
+      } else {
+        this.setState({
+          isLoading: false
+        })
       }
     } catch (error) {
       alert(error)
-    }
-  }
-
-  currentUserCheck () {
-    if (this.state.token !== "") {
-      Actions.drawer({ type: 'reset' })
     }
   }
 
@@ -83,6 +82,9 @@ export default class LocationForm extends Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <View style={styles.container}></View>
+    }
     return (
       <View style={styles.container}>
         <View style={styles.emailContainer}>

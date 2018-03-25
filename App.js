@@ -20,7 +20,7 @@ export default class App extends Component {
     return (
       <Router>
         <Scene key="root">
-          <Scene key="login" component={LoginForm} title="ログイン" />
+          <Scene key="login" component={LoginForm} hideNavBar />
           <Drawer
             key="drawer"
             hideNavBar
