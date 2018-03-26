@@ -20,6 +20,7 @@ export default class LocationForm extends Component {
       name: "",
       email: "",
       password: "",
+      validationMessages: [],
       isLoading: true
     }
   }
@@ -47,6 +48,10 @@ export default class LocationForm extends Component {
   }
 
   Signup(e) {
+    if (this.validationCheck()) {
+      return
+    }
+
     fetch('http://localhost:8080/signup', {
       method: 'POST',
       headers: {
@@ -54,9 +59,9 @@ export default class LocationForm extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password,
+        name: this.state.name.trim(),
+        email: this.state.email.trim(),
+        password: this.state.password.trim(),
       })
     })
       .then((response) => {
@@ -73,6 +78,18 @@ export default class LocationForm extends Component {
       })
   }
 
+  validationCheck () {
+    let messages = []
+    if (this.state.name.trim().length < 1) messages.push('ユーザー名を入力してください')
+    if (this.state.name.trim().length > 20) messages.push('ユーザー名は15文字以内で入力してください')
+    if (this.state.email.trim().length < 1) messages.push('メールアドレスを入力してください')
+    if (this.state.password.trim().length < 6) messages.push('パスワードは6文字以上入力してください')
+    this.setState({
+      validationMessages: messages
+    })
+    return messages.length > 0
+  }
+
   saveAuthData(json) {
     AsyncStorage.setItem('token', JSON.stringify(json.token))
     AsyncStorage.setItem('user', JSON.stringify(json.user))
@@ -82,6 +99,13 @@ export default class LocationForm extends Component {
     if (this.state.isLoading) {
       return <View style={styles.container}></View>
     }
+
+    const validationMessages = this.state.validationMessages.map((message, i) => (
+      <Text key={i + 1} style={styles.validationMessage}>
+        {message}
+      </Text>
+    ))
+
     return (
       <View style={styles.container}>
         <View style={styles.nameContainer}>
@@ -108,6 +132,9 @@ export default class LocationForm extends Component {
             style={styles.password}
             onChangeText={(text) => this.setState({ password: text })}
           />
+        </View>
+        <View style={styles.validationMessageContainer}>
+          {validationMessages}
         </View>
         <View style={styles.signupBtnContainer}>
           <TouchableOpacity
@@ -156,13 +183,19 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   passwordContainer: {
-    marginBottom: 40,
+    marginBottom: 20,
   },
   password: {
     borderBottomWidth: 1,
     borderColor: '#ffa500',
     padding: 5,
     fontSize: 16
+  },
+  validationMessage: {
+    color: '#f00'
+  },
+  validationMessageContainer: {
+    marginBottom: 20
   },
   signupBtnContainer: {
     marginBottom: 40,

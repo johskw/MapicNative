@@ -25,7 +25,8 @@ export default class LocationForm extends Component {
       imageUri: "",
       content: "",
       latitude: this.props.coordinate.latitude,
-      longitude: this.props.coordinate.longitude
+      longitude: this.props.coordinate.longitude,
+      validationMessages: []
     }
   }
 
@@ -52,6 +53,10 @@ export default class LocationForm extends Component {
   }
 
   postLocation(e) {
+    if (this.validationCheck()) {
+      return
+    }
+
     fetch('http://localhost:8080/restricted/locations', {
       method: 'POST',
       headers: {
@@ -60,8 +65,8 @@ export default class LocationForm extends Component {
         'Authorization': 'Bearer ' + this.props.token
       },
       body: JSON.stringify({
-        title: this.state.title,
-        content: this.state.content,
+        title: this.state.title.trim(),
+        content: this.state.content.trim(),
         image: this.state.imageData,
         latitude: this.state.latitude,
         longitude: this.state.longitude,
@@ -78,6 +83,19 @@ export default class LocationForm extends Component {
     })
   }
 
+  validationCheck() {
+    let messages = []
+    if (this.state.title.trim().length < 1) messages.push('タイトルを入力してください')
+    if (this.state.title.trim().length > 30) messages.push('タイトルは30文字以内で入力してください')
+    if (this.state.content.trim().length < 1) messages.push('内容を入力してください')
+    if (this.state.content.trim().length > 200) messages.push('内容を200文字以内で入力してください')
+    if (this.state.imageData.length < 1 || this.state.imageUri.length < 1) messages.push('画像を選択してください')
+    this.setState({
+      validationMessages: messages
+    })
+    return messages.length > 0
+  }
+
   renderImage() {
     return (
       <View style={styles.imageContainer}>
@@ -90,6 +108,12 @@ export default class LocationForm extends Component {
   }
 
   render() {
+    const validationMessages = this.state.validationMessages.map((message, i) => (
+      <Text key={i + 1} style={styles.validationMessage}>
+        {message}
+      </Text>
+    ))
+
     return (
       <ScrollView style={styles.container}>
         <View style={styles.titleContainer}>
@@ -118,6 +142,9 @@ export default class LocationForm extends Component {
           </TouchableOpacity>
         </View>
         {this.state.imageUri !== "" && this.renderImage()}
+        <View style={styles.validationMessageContainer}>
+          {validationMessages}
+        </View>
         <View style={styles.postBtnContainer}>
           <TouchableOpacity
             onPress={(e) => this.postLocation(e)}
@@ -192,8 +219,15 @@ const styles = StyleSheet.create({
     height: 300,
     width: 300
   },
+  validationMessage: {
+    color: '#f00'
+  },
+  validationMessageContainer: {
+    marginTop: 30,
+    marginBottom: 10
+  },
   postBtnContainer: {
-    marginTop: 40,
+    marginTop: 20,
     marginBottom: 60,
     alignItems: 'center'
   },

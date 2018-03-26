@@ -19,7 +19,8 @@ export default class LocationForm extends Component {
     this.state = {
       email: "",
       password: "",
-      isLoading: true
+      isLoading: true,
+      validationMessages: []
     }
   }
 
@@ -68,7 +69,9 @@ export default class LocationForm extends Component {
       Actions.drawer({ type: 'reset' })
     })
     .catch((error) => {
-      alert(error.message)
+      this.setState({
+        validationMessages: [error.message]
+      })
     })
   }
 
@@ -81,6 +84,13 @@ export default class LocationForm extends Component {
     if (this.state.isLoading) {
       return <View style={styles.container}></View>
     }
+
+    const validationMessages = this.state.validationMessages.map((message, i) => (
+      <Text key={i + 1} style={styles.validationMessage}>
+        {message}
+      </Text>
+    ))
+
     return (
       <View style={styles.container}>
         <View style={styles.emailContainer}>
@@ -99,6 +109,9 @@ export default class LocationForm extends Component {
             style={styles.password}
             onChangeText={(text) => this.setState({ password: text })}
           />
+        </View>
+        <View style={styles.validationMessageContainer}>
+          {validationMessages}
         </View>
         <View style={styles.loginBtnContainer}>
           <TouchableOpacity
@@ -138,13 +151,19 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   passwordContainer: {
-    marginBottom: 40,
+    marginBottom: 20
   },
   password: {
     borderBottomWidth: 1,
     borderColor: '#ffa500',
     padding: 5,
     fontSize: 16
+  },
+  validationMessage: {
+    color: '#f00'
+  },
+  validationMessageContainer: {
+    marginBottom: 20
   },
   loginBtnContainer: {
     marginBottom: 40,
