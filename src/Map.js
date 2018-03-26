@@ -77,7 +77,7 @@ export default class Map extends Component {
       <Marker coordinate={this.state.newMarker.coordinate} >
         <Callout>
           <TouchableOpacity onPress={() => { Actions.newLocation({coordinate: this.state.newMarker.coordinate, user: this.state.user, token: this.state.token }) }}>
-            <Text>ここに投稿する</Text>
+            <Text style={styles.postBtnText}>ここに投稿する</Text>
           </TouchableOpacity>
         </Callout>
       </Marker>
@@ -123,5 +123,9 @@ export default class Map extends Component {
 }
 
 const styles = StyleSheet.create({
-  map: { ...StyleSheet.absoluteFillObject, }
+  map: { ...StyleSheet.absoluteFillObject, },
+  postBtnText: {
+    fontSize: 16,
+    padding: 5
+  }
 })

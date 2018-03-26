@@ -20,7 +20,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <Router tintColor='#fff' navigationBarStyle={styles.navBar} titleStyle={styles.navBarTitle} >
+      <Router tintColor='#ffa500' navigationBarStyle={styles.navBar} titleStyle={styles.navBarTitle} >
         <Scene key="root">
           <Scene key="login" component={LoginForm} hideNavBar />
           <Scene key="signup" component={SignupForm} hideNavBar />
@@ -34,9 +34,9 @@ export default class App extends Component {
             contentComponent={DrawerContent}
           >
             <Stack>
-              <Scene key="map" component={Map} title="Map" />
+              <Scene key="map" component={Map} title="MAP" />
               <Scene key="newLocation" component={LocationForm} title="新規投稿" />
-              <Scene key="Location" component={Location} />
+              <Scene key="Location" component={Location} title="投稿" />
             </Stack>
           </Drawer>
         </Scene>
@@ -47,13 +47,9 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: '#ffa500',
-    borderBottomWidth: 0,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15
+    backgroundColor: '#fff'
   },
   navBarTitle: {
-    color: '#fff'
+    color: '#000'
   },
 })

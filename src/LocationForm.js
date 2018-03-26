@@ -120,7 +120,7 @@ export default class LocationForm extends Component {
           <View style={styles.titleContainer}>
             <TextInput
               value={this.state.title}
-              placeholder='タイトル'
+              placeholder='タイトル（30文字以内）'
               style={styles.title}
               onChangeText={(text) => this.setState({ title: text })}
             />
@@ -128,7 +128,7 @@ export default class LocationForm extends Component {
           <View style={styles.contentContainer}>
             <TextInput
               value={this.state.content}
-              placeholder='内容'
+              placeholder='説明・感想（200文字以内）'
               multiline={true}
               style={styles.content}
               onChangeText={(text) => this.setState({ content: text })}
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   imageBtn: {
     backgroundColor: '#ffa500',
     borderRadius: 2,
-    width: 90,
+    width: 100,
     height: 36,
     alignItems: 'center',
     justifyContent: 'center',
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   postBtn: {
     backgroundColor: '#ffa500',
     borderRadius: 2,
-    width: 160,
+    width: 200,
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
