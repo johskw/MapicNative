@@ -207,7 +207,10 @@ const styles = StyleSheet.create({
     width: 200,
     height: 40,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2
   },
   signupBtnText: {
     color: '#fff',
@@ -222,7 +225,10 @@ const styles = StyleSheet.create({
     width: 180,
     height: 40,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2
   },
   loginBtnText: {
     color: '#fff',

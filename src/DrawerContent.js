@@ -50,7 +50,10 @@ const styles = StyleSheet.create({
     width: 160,
     height: 40,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2
   },
   logoutBtnText: {
     color: '#fff',

@@ -19,26 +19,28 @@ export default class Location extends Component {
   render () {
     return(
       <ScrollView style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: 'data:image/jpeg;base64,' + this.props.location.image }}
-            style={styles.image}
-          />
-        </View>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>
-            {this.props.location.title}
-          </Text>
-        </View>
-        <View style={styles.contentContainer}>
-          <Text>
-            {this.props.location.content}
-          </Text>
-        </View>
-        <View style={styles.userContainer}>
-          <Text>
-            {this.props.location.user.name}さん
-          </Text>
+        <View style={styles.mainContainer}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={{ uri: 'data:image/jpeg;base64,' + this.props.location.image }}
+              style={styles.image}
+            />
+          </View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>
+              {this.props.location.title}
+            </Text>
+          </View>
+          <View style={styles.contentContainer}>
+            <Text style={styles.content}>
+              {this.props.location.content}
+            </Text>
+          </View>
+          <View style={styles.userContainer}>
+            <Text style={styles.user}>
+              {this.props.location.user.name}さん
+            </Text>
+          </View>
         </View>
         <View style={styles.mapContainer}>
           <MapView
@@ -74,34 +76,50 @@ export default class Location extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#eee',
+  },
+  mainContainer: {
     backgroundColor: '#fff',
+    paddingTop: 0,
     padding: 30,
-    paddingTop: 0
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
   },
   imageContainer: {
     alignItems: 'center',
-    marginBottom: 20
+    marginBottom: 30
   },
   image: {
     height: 375,
     width: 375
   },
   titleContainer: {
-    marginBottom: 10,
+    marginBottom: 20,
   },
   title: {
-   fontSize: 16
+    fontSize: 18,
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+    textDecorationColor: '#ffa500'
   },
   contentContainer: {
-    marginBottom: 10
+    marginBottom: 20
+  },
+  content: {
+    fontSize: 16
   },
   userContainer: {
     alignItems: 'flex-end',
-    marginBottom: 30
+    marginBottom: 10
+  },
+  user: {
+    fontSize: 16
   },
   mapContainer: {
     alignItems: 'center',
-    marginBottom: 100
+    paddingTop: 40,
+    paddingBottom: 80
   },
   map: {
     height: 320,

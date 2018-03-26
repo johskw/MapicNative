@@ -116,42 +116,44 @@ export default class LocationForm extends Component {
 
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.titleContainer}>
-          <TextInput
-            value={this.state.title}
-            placeholder='タイトル'
-            style={styles.title}
-            onChangeText={(text) => this.setState({ title: text })}
-          />
-        </View>
-        <View style={styles.contentContainer}>
-          <TextInput
-            value={this.state.content}
-            placeholder='内容'
-            multiline={true}
-            style={styles.content}
-            onChangeText={(text) => this.setState({ content: text })}
-          />
-        </View>
-        <View style={styles.imageBtnContainer}>
-          <TouchableOpacity
-            onPress={(e) => this.selectImage(e)}
-            style={styles.imageBtn}
-          >
-            <Text style={styles.imageBtnText}>画像を選択</Text>
-          </TouchableOpacity>
-        </View>
-        {this.state.imageUri !== "" && this.renderImage()}
-        <View style={styles.validationMessageContainer}>
-          {validationMessages}
-        </View>
-        <View style={styles.postBtnContainer}>
-          <TouchableOpacity
-            onPress={(e) => this.postLocation(e)}
-            style={styles.postBtn}
-          >
-            <Text style={styles.postBtnText}>投稿</Text>
-          </TouchableOpacity>
+        <View style={styles.mainContainer}>
+          <View style={styles.titleContainer}>
+            <TextInput
+              value={this.state.title}
+              placeholder='タイトル'
+              style={styles.title}
+              onChangeText={(text) => this.setState({ title: text })}
+            />
+          </View>
+          <View style={styles.contentContainer}>
+            <TextInput
+              value={this.state.content}
+              placeholder='内容'
+              multiline={true}
+              style={styles.content}
+              onChangeText={(text) => this.setState({ content: text })}
+            />
+          </View>
+          <View style={styles.imageBtnContainer}>
+            <TouchableOpacity
+              onPress={(e) => this.selectImage(e)}
+              style={styles.imageBtn}
+            >
+              <Text style={styles.imageBtnText}>画像を選択</Text>
+            </TouchableOpacity>
+          </View>
+          {this.state.imageUri !== "" && this.renderImage()}
+          <View style={styles.validationMessageContainer}>
+            {validationMessages}
+          </View>
+          <View style={styles.postBtnContainer}>
+            <TouchableOpacity
+              onPress={(e) => this.postLocation(e)}
+              style={styles.postBtn}
+            >
+              <Text style={styles.postBtnText}>投稿</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.mapContainer}>
           <MapView
@@ -176,8 +178,15 @@ export default class LocationForm extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#eee'
+  },
+  mainContainer: {
     backgroundColor: '#fff',
-    padding: 30
+    paddingTop: 80,
+    padding: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2
   },
   titleContainer: {
     marginBottom: 20,
@@ -206,14 +215,17 @@ const styles = StyleSheet.create({
     width: 90,
     height: 36,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2
   },
   imageBtnText: {
     color: '#fff'
   },
   imageContainer: {
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 20,
   },
   image: {
     height: 300,
@@ -223,12 +235,12 @@ const styles = StyleSheet.create({
     color: '#f00'
   },
   validationMessageContainer: {
-    marginTop: 30,
-    marginBottom: 10
+    marginTop: 25,
+    marginBottom: 5
   },
   postBtnContainer: {
     marginTop: 20,
-    marginBottom: 60,
+    marginBottom: 20,
     alignItems: 'center'
   },
   postBtn: {
@@ -237,7 +249,10 @@ const styles = StyleSheet.create({
     width: 160,
     height: 40,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2
   },
   postBtnText: {
     color: '#fff',
@@ -245,10 +260,11 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     alignItems: 'center',
-    marginBottom: 100
+    paddingTop: 40,
+    paddingBottom: 80
   },
   map: {
-    height: 300,
-    width: 300
+    height: 320,
+    width: 320
   }
 })
