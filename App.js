@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {
+  StyleSheet,
   AsyncStorage
 } from 'react-native'
 import {
@@ -19,7 +20,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router tintColor='#fff' navigationBarStyle={styles.navBar} titleStyle={styles.navBarTitle} >
         <Scene key="root">
           <Scene key="login" component={LoginForm} hideNavBar />
           <Scene key="signup" component={SignupForm} hideNavBar />
@@ -43,3 +44,16 @@ export default class App extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  navBar: {
+    backgroundColor: '#ffa500',
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15
+  },
+  navBarTitle: {
+    color: '#fff'
+  },
+})
