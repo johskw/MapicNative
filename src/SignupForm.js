@@ -17,13 +17,14 @@ export default class LocationForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      name: "",
       email: "",
       password: "",
       isLoading: true
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.checkAuth()
   }
 
@@ -33,7 +34,7 @@ export default class LocationForm extends Component {
       let tokenData = await AsyncStorage.getItem('token')
       let user = JSON.parse(userData)
       let token = JSON.parse(tokenData)
-      if (token !== null && user !== null ) {
+      if (token !== null && user !== null) {
         Actions.drawer({ type: 'reset', token: token, user: user })
       } else {
         this.setState({
@@ -45,34 +46,34 @@ export default class LocationForm extends Component {
     }
   }
 
-  Login(e) {
-    fetch('http://localhost:8080/login', {
+  Signup(e) {
+    fetch('http://localhost:8080/signup', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        name: this.state.name,
         email: this.state.email,
         password: this.state.password,
       })
     })
-    .then((response) => {
-      if (response.ok) {
-        return response.json()
-      }
-      throw new Error('メールアドレスまたはパスワードが間違っています')
-    })
-    .then((responseJson) => {
-      this.saveAuthData(responseJson)
-      Actions.drawer({ type: 'reset' })
-    })
-    .catch((error) => {
-      alert(error.message)
-    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+      })
+      .then((responseJson) => {
+        this.saveAuthData(responseJson)
+        Actions.drawer({ type: 'reset' })
+      })
+      .catch((error) => {
+        alert(error.message)
+      })
   }
 
-  saveAuthData (json) {
+  saveAuthData(json) {
     AsyncStorage.setItem('token', JSON.stringify(json.token))
     AsyncStorage.setItem('user', JSON.stringify(json.user))
   }
@@ -83,6 +84,14 @@ export default class LocationForm extends Component {
     }
     return (
       <View style={styles.container}>
+        <View style={styles.nameContainer}>
+          <TextInput
+            value={this.state.name}
+            placeholder='ユーザー名'
+            style={styles.name}
+            onChangeText={(text) => this.setState({ name: text })}
+          />
+        </View>
         <View style={styles.emailContainer}>
           <TextInput
             value={this.state.email}
@@ -100,20 +109,20 @@ export default class LocationForm extends Component {
             onChangeText={(text) => this.setState({ password: text })}
           />
         </View>
-        <View style={styles.loginBtnContainer}>
-          <TouchableOpacity
-            onPress={(e) => this.Login(e)}
-            style={styles.loginBtn}
-          >
-            <Text style={styles.loginBtnText}>ログイン</Text>
-          </TouchableOpacity>
-        </View>
         <View style={styles.signupBtnContainer}>
           <TouchableOpacity
-            onPress={Actions.signup}
+            onPress={(e) => this.Signup(e)}
             style={styles.signupBtn}
           >
-            <Text style={styles.signupBtnText}>新規登録はこちら</Text>
+            <Text style={styles.signupBtnText}>新規登録</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.loginBtnContainer}>
+          <TouchableOpacity
+            onPress={() => Actions.login({type: 'reset'})}
+            style={styles.loginBtn}
+          >
+            <Text style={styles.loginBtnText}>ログインはこちら</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -127,6 +136,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 30,
     justifyContent: 'center'
+  },
+  nameContainer: {
+    marginBottom: 20,
+  },
+  name: {
+    borderBottomWidth: 1,
+    borderColor: '#ffa500',
+    padding: 5,
+    fontSize: 16
   },
   emailContainer: {
     marginBottom: 20,
@@ -146,11 +164,11 @@ const styles = StyleSheet.create({
     padding: 5,
     fontSize: 16
   },
-  loginBtnContainer: {
+  signupBtnContainer: {
     marginBottom: 40,
     alignItems: 'center'
   },
-  loginBtn: {
+  signupBtn: {
     backgroundColor: '#ffa500',
     borderRadius: 2,
     width: 200,
@@ -158,14 +176,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  loginBtnText: {
+  signupBtnText: {
     color: '#fff',
     fontSize: 16
   },
-  signupBtnContainer: {
+  loginBtnContainer: {
     alignItems: 'center'
   },
-  signupBtn: {
+  loginBtn: {
     backgroundColor: '#ffc000',
     borderRadius: 2,
     width: 180,
@@ -173,7 +191,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  signupBtnText: {
+  loginBtnText: {
     color: '#fff',
     fontSize: 16
   }

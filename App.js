@@ -12,6 +12,7 @@ import Map from './src/Map'
 import LocationForm from './src/LocationForm'
 import Location from './src/Location'
 import LoginForm from './src/LoginForm'
+import SignupForm from './src/SignupForm'
 import DrawerContent from './src/DrawerContent'
 
 export default class App extends Component {
@@ -21,6 +22,7 @@ export default class App extends Component {
       <Router>
         <Scene key="root">
           <Scene key="login" component={LoginForm} hideNavBar />
+          <Scene key="signup" component={SignupForm} hideNavBar />
           <Drawer
             key="drawer"
             hideNavBar
