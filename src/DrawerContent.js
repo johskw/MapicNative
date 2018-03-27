@@ -11,7 +11,30 @@ import {
   Actions
 } from 'react-native-router-flux'
 
-export default class Location extends Component {
+export default class DrawerContent extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: {}
+    }
+  }
+
+  componentWillMount() {
+    this.setData()
+  }
+
+  setData = async () => {
+    try {
+      let userData = await AsyncStorage.getItem('user')
+      let user = JSON.parse(userData)
+      this.setState({
+        user: user,
+      })
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   deleteAuthData (e) {
     AsyncStorage.removeItem('token')
@@ -22,6 +45,14 @@ export default class Location extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.nameContainer}>
+          <Text style={styles.name}>
+            {this.state.user.name}さん
+          </Text>
+          <Text　style={styles.nameText}>
+            でログインしています
+          </Text>
+        </View>
         <View style={styles.logoutBtnContainer} >
           <TouchableOpacity
             onPress={(e) => this.deleteAuthData(e)}
@@ -38,11 +69,24 @@ export default class Location extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    alignItems: 'center'
+  },
+  nameContainer: {
+    marginTop: 80,
+    alignItems: 'center'
+  },
+  name: {
+    fontSize: 18,
+    marginBottom: 10
+  },
+  nameText: {
+    fontSize: 16
   },
   logoutBtnContainer : {
     alignItems: 'center',
-    marginTop: 60
+    position: 'absolute',
+    bottom: 60
   },
   logoutBtn: {
     backgroundColor: '#ffa500',
