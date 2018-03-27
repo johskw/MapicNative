@@ -123,6 +123,8 @@ const styles = StyleSheet.create({
   },
   map: {
     height: 320,
-    width: 320
+    width: 320,
+    borderWidth: 1,
+    borderColor: '#ddd'
   }
 })
