@@ -52,7 +52,7 @@ export default class LocationForm extends Component {
       return
     }
 
-    fetch('http://localhost:8080/signup', {
+    fetch(this.props.apiUrl + '/signup', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

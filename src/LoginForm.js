@@ -47,7 +47,7 @@ export default class LocationForm extends Component {
   }
 
   Login(e) {
-    fetch('http://localhost:8080/login', {
+    fetch(this.props.apiUrl + '/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

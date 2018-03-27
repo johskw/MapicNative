@@ -46,7 +46,7 @@ export default class Map extends Component {
   }
 
   setLocations() {
-    fetch('http://localhost:8080/restricted/locations', {
+    fetch(this.props.apiUrl + '/restricted/locations', {
       headers: {
         'Authorization': 'Bearer ' + this.state.token
       }

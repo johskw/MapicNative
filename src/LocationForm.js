@@ -57,7 +57,7 @@ export default class LocationForm extends Component {
       return
     }
 
-    fetch('http://localhost:8080/restricted/locations', {
+    fetch(this.props.apiUrl + '/restricted/locations', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
