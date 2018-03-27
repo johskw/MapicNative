@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
   StyleSheet,
+  View,
   Text,
   AsyncStorage
 } from 'react-native'
@@ -20,19 +21,29 @@ import DrawerContent from './src/DrawerContent'
 
 class MapIcon extends Component {
   render () {
-    let iconColor = this.props.focused ? '#ffa500' : '#888'
     return(
-      <Text style={{ fontFamily: 'fontawesome', fontSize: 24, color: iconColor }}>&#xf041;</Text>
+      <View style={styles.tabIconContainer}>
+        <Text style={this.props.focused ? styles.selectedTabIcon : styles.tabIcon}>&#xf041;</Text>
+        <Text style={this.props.focused ? styles.selectedTabIconText : styles.tabIconText}>MAP</Text>
+      </View>
     )
   }
 }
 
 class UserIcon extends Component {
   render () {
-    let iconColor = this.props.focused ? '#ffa500' : '#888'
     return(
-      <Text style={{ fontFamily: 'fontawesome', fontSize: 24, color: iconColor }}>&#xf007;</Text>
+      <View style={styles.tabIconContainer}>
+        <Text style={this.props.focused ? styles.selectedTabIcon : styles.tabIcon}>&#xf007;</Text>
+        <Text style={this.props.focused ? styles.selectedTabIconText : styles.tabIconText}>自分の投稿</Text>
+      </View>
     )
+  }
+}
+
+class SettingIcon extends Component {
+  render () {
+    return <Text style={styles.navbarIcon}>&#xf013;</Text>
   }
 }
 
@@ -50,8 +61,7 @@ export default class App extends Component {
             key="drawer"
             hideNavBar
             drawerPosition='right'
-            // drawerImage={() => (<Image/>)} // デフォルトのハンバーガーメニューを差し替える
-            // drawerIcon={() => (<Icon/>)} // デフォルトのハンバーガーメニューを差し替える
+            drawerIcon={<SettingIcon />}
             drawerWidth={220}
             contentComponent={DrawerContent}
           >
@@ -59,6 +69,7 @@ export default class App extends Component {
               key="tabbar"
               tabs
               tabBarStyle={styles.tabBar}
+              showLabel={false}
               labelStyle={{ color: this.props.focused ? '#ffa500' : '#888' }}
             >
               <Stack key="MAP" icon={MapIcon} >
@@ -85,7 +96,36 @@ const styles = StyleSheet.create({
   navBarTitle: {
     color: '#000'
   },
+  navbarIcon: {
+    fontFamily: 'fontawesome',
+    fontSize: 24,
+    color: '#ffa500'
+  },
   tabBar: {
     backgroundColor: '#fff'
+  },
+  tabIconContainer: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  tabIcon: {
+    fontFamily: 'fontawesome',
+    fontSize: 24,
+    color: '#888',
+    marginBottom: 2
+  },
+  selectedTabIcon: {
+    fontFamily: 'fontawesome',
+    fontSize: 24,
+    color: '#ffa500',
+    marginBottom: 2
+  },
+  tabIconText: {
+    fontSize: 10,
+    color: '#888'
+  },
+  selectedTabIconText: {
+    fontSize: 10,
+    color: '#ffa500'
   }
 })
